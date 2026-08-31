@@ -1,0 +1,180 @@
+### Create Restaurant
+POST http://localhost:8080/api/restaurants
+Content-Type: application/json
+
+{
+  "name": "Pizza Paradise",
+  "cuisine": "ITALIAN",
+  "address": "123 Main Street, 1000, 1000, Brussels, Belgium",
+  "contactEmail": "info@pizzaparadise.be",
+  "imageUrls": [
+    "https://example.com/pizza1.jpg",
+    "https://example.com/pizza2.jpg"
+  ],
+  "defaultPrepTimeMinutes": 30,
+  "openingHours": "Mon-Fri: 11:00-22:00, Sat-Sun: 12:00-23:00"
+}
+
+### Get All Restaurants
+GET http://localhost:8080/api/restaurants
+
+### Get Restaurant by ID (replace with actual UUID from create response)
+GET http://localhost:8080/api/restaurants/{{restaurantId}}
+
+### Create Second Restaurant (same owner - should fail)
+POST http://localhost:8080/api/restaurants
+Content-Type: application/json
+
+{
+  "name": "La Bella Italia",
+  "cuisine": "ITALIAN",
+  "address": "Rue de la Loi, 123, 1000, Brussels, Belgium",
+  "contactEmail": "info@labellaitalia.be",
+  "imageUrls": [
+    "https://example.com/restaurant1.jpg",
+    "https://example.com/restaurant2.jpg"
+  ],
+  "defaultPrepTimeMinutes": 30,
+  "openingHours": "Mon-Sun: 10:00-22:00"
+}
+
+###############################################
+# DISH MANAGEMENT
+###############################################
+
+### Create Dish (Draft) - replace {{restaurantId}} with your actual restaurant UUID
+POST http://localhost:8080/api/restaurants/e68dc595-78a2-461e-a13f-1e5412d0734a/dishes
+Content-Type: application/json
+
+
+{
+  "name": "Margherita Pizza",
+  "type": "MAIN",
+  "foodTags": ["LACTOSE", "GLUTEN"],
+  "description": "Classic Italian pizza with tomato sauce and mozzarella",
+  "price": 12.50,
+  "imageUrl": "https://example.com/margherita.jpg"
+}
+
+### Create Another Dish
+POST http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes
+Content-Type: application/json
+
+{
+  "name": "Tiramisu",
+  "type": "DESSERT",
+  "foodTags": ["LACTOSE", "GLUTEN"],
+  "description": "Traditional Italian dessert with coffee and mascarpone",
+  "price": 7.50,
+  "imageUrl": "https://example.com/tiramisu.jpg"
+}
+
+### Get All Dishes for Restaurant
+GET http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes
+
+### Get Single Dish
+GET http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes/01145af5-8612-4dbd-bbc0-cc4efe87b8f3
+
+### Update Dish (marks as having pending changes)
+PUT http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes/01145af5-8612-4dbd-bbc0-cc4efe87b8f3
+Content-Type: application/json
+
+{
+  "name": "Margherita Pizza Deluxe",
+  "type": "MAIN",
+  "foodTags": ["LACTOSE", "GLUTEN"],
+  "description": "Classic Italian pizza with tomato sauce, mozzarella and fresh basil",
+  "price": 13.50,
+  "imageUrl": "https://example.com/margherita-deluxe.jpg"
+}
+
+### Publish Dish (makes it visible to customers)
+POST http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes/{{dishId}}/publish
+
+### Mark Dish Out of Stock (immediate)
+POST http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes/{{dishId}}/out-of-stock
+
+### Mark Dish Back In Stock (immediate)
+POST http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes/{{dishId}}/in-stock
+
+### Unpublish Dish (removes from menu)
+POST http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes/{{dishId}}/unpublish
+
+### Get Count of Pending Changes
+GET http://localhost:8080/api/restaurants/b44c6db4-528e-473f-a006-7908ebbc158b/dishes/pending-changes/count
+
+###############################################
+# FULL WORKFLOW TEST
+###############################################
+
+### 1. Create Restaurant
+POST http://localhost:8080/api/restaurants
+Content-Type: application/json
+
+{
+  "name": "Sushi Master",
+  "cuisine": "JAPANESE",
+  "address": "Avenue Louise, 456, 1050, Brussels, Belgium",
+  "contactEmail": "contact@sushimaster.be",
+  "imageUrls": ["https://example.com/sushi1.jpg"],
+  "defaultPrepTimeMinutes": 25,
+  "openingHours": "Mon-Sun: 11:00-23:00"
+}
+
+### 2. Create 3 dishes (all start as DRAFT)
+POST http://localhost:8080/api/restaurants/b8b7cf2c-8dd6-416a-b951-abca4d09eb33/dishes
+Content-Type: application/json
+
+{
+  "name": "California Roll",
+  "type": "MAIN",
+  "foodTags": ["SEAFOOD"],
+  "description": "Fresh salmon, avocado, and cucumber",
+  "price": 9.50,
+  "imageUrl": "https://example.com/california.jpg"
+}
+
+###
+POST http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes
+Content-Type: application/json
+
+{
+  "name": "Miso Soup",
+  "type": "STARTER",
+  "foodTags": ["VEGAN"],
+  "description": "Traditional Japanese soup",
+  "price": 4.50,
+  "imageUrl": "https://example.com/miso.jpg"
+}
+
+###
+POST http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes
+Content-Type: application/json
+
+{
+  "name": "Green Tea Ice Cream",
+  "type": "DESSERT",
+  "foodTags": ["LACTOSE"],
+  "description": "Creamy matcha ice cream",
+  "price": 5.00,
+  "imageUrl": "https://example.com/matcha.jpg"
+}
+
+### 3. Check pending changes count (should be 3)
+GET http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes/pending-changes/count
+
+### 4. Publish all dishes
+POST http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes/8f2a55b5-5793-4469-bf60-1ab76b9c03a9/publish
+###
+POST http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes/bc32e8cd-6197-491c-9903-73ab69228bd6/publish
+###
+POST http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes/dc8f6216-9d41-4ead-aefa-0f863ef4850b/publish
+
+### 5. Check pending changes count (should be 0)
+GET http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes/pending-changes/count
+
+### 6. Mark one dish out of stock
+POST http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes/dc8f6216-9d41-4ead-aefa-0f863ef4850b/out-of-stock
+
+### 7. Get all dishes (should show different statuses)
+GET http://localhost:8080/api/restaurants/81f4b44a-bf65-40aa-99cb-ebd2d5ef8062/dishes

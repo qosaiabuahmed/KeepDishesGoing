@@ -1,0 +1,33 @@
+Title,Description
+As an owner I want to sign up/sign in to access my restaurant management area,Owner authentication and restaurant access
+As an owner I want to create my restaurant by submitting name full address contact email picture(s) url default preparation time type of cuisine and opening hours,Restaurant creation form with all required fields
+As an owner I want to edit a dish as a draft without affecting the live menu,Draft editing system for dishes
+As an owner I want to publish a dish so it becomes available to customers,Publish functionality for individual dishes
+As an owner I want to unpublish a dish so it is no longer available to customers,Unpublish functionality for individual dishes
+As an owner I want to apply all pending dish changes in one action,Batch apply all pending changes
+As an owner I want to schedule a set of publishes/unpublishes to go live together at a chosen time,Scheduled publishing system
+As an owner I want to mark a dish out of stock or back in stock immediately,Immediate stock status updates
+As an owner I want to set opening hours and manually open/close the restaurant at any moment,Manual restaurant open/close control
+As an owner I want to accept or reject new orders and provide a reason on rejection,Order acceptance/rejection system
+As an owner I want orders without a decision within five minutes to be automatically declined,Auto-decline orders after 5 minutes
+As an owner I want to mark an accepted order ready for pickup,Mark order ready for pickup
+As a customer I want the landing page to let me continue as a customer,Customer landing page entry
+As a customer I want to explore restaurants in a list or on a map,Restaurant browsing interface
+As a customer I want to view a restaurant's details and dishes,Restaurant detail view
+As a customer I want to filter restaurants by type of cuisine price range distance and guesstimated delivery time,Restaurant filtering system
+As a customer I want to filter dishes by type (e.g. starter or dessert) and by food tags (lactose gluten vegan ...),Dish filtering system
+As a customer I want sensible sorting options (e.g. price) when viewing dishes,Dish sorting functionality
+As a customer I want to see a guesstimated delivery time based on location default preparation time and busyness,Delivery time estimation
+As a customer I want to build a basket from a single restaurant's published dishes,Shopping basket functionality
+As a customer I want checkout to be blocked if any dish in my basket becomes out of stock or unpublished while I'm browsing,Basket validation and checkout blocking
+As a customer I want to provide my name delivery address and contact email at checkout,Checkout information form
+As a customer I want to pay using the payment provider during checkout,Payment integration
+As a customer I want a confirmation with a link so I can return to track my order,Order confirmation and tracking link
+As a customer I want to track the progress of my order as its status changes,Order status tracking
+As KDG I want to be able to see the price range evolution of a restaurant,Price range evolution analytics
+As KDG I want no more than 10 dishes to be available to customers at any moment,10 dish limit business rule
+As KDG I want to publish messages for the delivery service when an order is accepted and when it is ready for pickup,RabbitMQ delivery service integration outbound
+As KDG I want to consume delivery service messages for picked up delivered and courier locations to update orders,RabbitMQ delivery service integration inbound
+As KDG I want customers to be able to order without signing up or signing in,Guest checkout functionality
+As KDG I want each owner to manage exactly one restaurant,One restaurant per owner rule
+As KDG I want to adjust the price ranges criteria,Configurable price range criteria
